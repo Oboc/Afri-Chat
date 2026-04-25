@@ -15,8 +15,9 @@ const App = () => {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
+  const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      try {
         const ref = doc(db, "users", user.uid);
         const snap = await getDoc(ref);
 
@@ -25,11 +26,17 @@ const App = () => {
         } else {
           setUsername(null);
         }
+      } catch (err) {
+        console.error("Error fetching user:", err);
       }
-    });
+    } else {
+      setUsername(null);
+    }
+  });
 
-    return () => unsubscribe();
-  }, [user]);
+  return () => unsubscribe();
+}, []);
+
 
   if (!user) return <SignIn />;
 
