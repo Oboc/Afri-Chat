@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { auth } from "../firebase"; // ✅ Correct import
 
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import "../app.css";
+import "../App.css";
 
 const SignIn = () => {
  const [email, setEmail] = useState("");
